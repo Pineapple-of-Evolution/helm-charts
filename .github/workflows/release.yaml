@@ -47,5 +47,5 @@ jobs:
         run: |
           owner="${{ github.repository_owner }}"
           repo="${GITHUB_REPOSITORY#*/}"
-          cr upload --owner "$owner" --repo "$repo" --commit "${{ github.sha }}" --skip-existing
-          cr index --owner "$owner" --repo "$repo" --push
+          cr upload --owner "$owner" --git-repo "$repo" --commit "${{ github.sha }}" --skip-existing
+          cr index --owner "$owner" --git-repo "$repo" --push
