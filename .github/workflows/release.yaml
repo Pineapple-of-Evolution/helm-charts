@@ -45,6 +45,19 @@ jobs:
         env:
           CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # cr upload checks out origin/gh-pages even when the packages go to a GitHub release.
+          if ! git fetch origin gh-pages:refs/remotes/origin/gh-pages; then
+            empty=$(mktemp -d)
+            git worktree add --detach "$empty"
+            git -C "$empty" checkout --orphan gh-pages
+            git -C "$empty" rm -rf .
+            printf '%s\n' 'apiVersion: v1' 'entries: {}' > "$empty/index.yaml"
+            git -C "$empty" add index.yaml
+            git -C "$empty" commit -m "Initialize chart repository"
+            git -C "$empty" push origin HEAD:gh-pages
+            git worktree remove --force "$empty"
+            git fetch origin gh-pages:refs/remotes/origin/gh-pages
+          fi
           owner="${{ github.repository_owner }}"
           repo="${GITHUB_REPOSITORY#*/}"
           cr upload --owner "$owner" --git-repo "$repo" --commit "${{ github.sha }}" --skip-existing
