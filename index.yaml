@@ -1,2 +1,139 @@
 apiVersion: v1
-entries: {}
+entries:
+  nxs-universal-chart:
+  - annotations:
+      artifacthub.io/category: integration-delivery
+      artifacthub.io/changes: |
+        - kind: added
+          description: "generic.useDefaultSelectorLabels (default true): set to false to drop app.kubernetes.io/name and app.kubernetes.io/instance from selectors and select only by extraSelectorLabels; pods keep the standard labels"
+        - kind: added
+          description: "pdbs.<name>.unhealthyPodEvictionPolicy is passed through to PodDisruptionBudget spec.unhealthyPodEvictionPolicy (IfHealthyBudget or AlwaysAllow)"
+      artifacthub.io/license: Apache License 2.0
+      artifacthub.io/links: |
+        - name: Home
+          url: https://nixys.io
+        - name: Source
+          url: https://github.com/nixys/nxs-universal-chart
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/recommendations: |
+        - url: https://nixys.io
+        - url: https://github.com/nixys/nxs-universal-chart
+      artifacthub.io/signKey: |
+        fingerprint: 6DC59A12500AE4BA79BE0CE5552634D6847EB0CF3C05D3751183F57D27A1E7AC
+        url: https://registry.nixys.io/signkey/cosign.pub
+    apiVersion: v2
+    appVersion: v1
+    created: "2026-11-26T22:18:20.761193767Z"
+    dependencies:
+    - name: nuc-common
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-traefik.enabled
+      name: nuc-traefik
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.6
+    - condition: nuc-certificates.enabled
+      name: nuc-certificates
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-istio.enabled
+      name: nuc-istio
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.6
+    - condition: nuc-fluxcd.enabled
+      name: nuc-fluxcd
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-argocd.enabled
+      name: nuc-argocd
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-knative.enabled
+      name: nuc-knative
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.6
+    - condition: nuc-kserve.enabled
+      name: nuc-kserve
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-kube-prometheus-stack.enabled
+      name: nuc-kube-prometheus-stack
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.6
+    - condition: nuc-native-gateway.enabled
+      name: nuc-native-gateway
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.7
+    - condition: nuc-victoria-metrics.enabled
+      name: nuc-victoria-metrics
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-vault-secret-operator.enabled
+      name: nuc-vault-secret-operator
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.6
+    - condition: nuc-keda.enabled
+      name: nuc-keda
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.5
+    - condition: nuc-cloudnativepg.enabled
+      name: nuc-cloudnativepg
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.1
+    - condition: nuc-mysql-percona-operator.enabled
+      name: nuc-mysql-percona-operator
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.1
+    - condition: nuc-rabbitmq.enabled
+      name: nuc-rabbitmq
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.2
+    - condition: nuc-clickhouse.enabled
+      name: nuc-clickhouse
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.2
+    - condition: nuc-elk.enabled
+      name: nuc-elk
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.1
+    - condition: nuc-external-secrets.enabled
+      name: nuc-external-secrets
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.1.1
+    - condition: nuc-mongodb-percona-operator.enabled
+      name: nuc-mongodb-percona-operator
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.1
+    - condition: global.nuc-envoy-gateway.enabled
+      name: nuc-envoy-gateway
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.2
+    - condition: nuc-valkey.enabled
+      name: nuc-valkey
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.1
+    - condition: nuc-keycloak-operator.enabled
+      name: nuc-keycloak-operator
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.3
+    - condition: nuc-strimzi-kafka-operator.enabled
+      name: nuc-strimzi-kafka-operator
+      repository: oci://registry.nixys.ru/nuc
+      version: 1.0.1
+    description: Helm chart for rendering reusable Kubernetes application resources
+    digest: cb51482496ff828617b299d9ff7ec7400e8f55e9f026ec028c9dde73a75ba288
+    home: https://github.com/nixys/nxs-universal-chart
+    icon: https://registry.nixys.ru/logo.png
+    maintainers:
+    - email: hello@nixys.io
+      name: Nixys Team
+    - email: p.rukin@nixys.ru
+      name: Peter Rukin
+    - email: v.vorobyov@nixys.ru
+      name: Vyacheslav Vorobev
+    name: nxs-universal-chart
+    type: application
+    urls:
+    - https://github.com/Pineapple-of-Evolution/helm-charts/releases/download/nxs-universal-chart-3.2.4/nxs-universal-chart-3.2.4.tgz
+    version: 3.2.4
+generated: "2026-11-26T22:18:20.761204868Z"
