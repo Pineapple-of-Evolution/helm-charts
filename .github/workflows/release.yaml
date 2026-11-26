@@ -22,7 +22,30 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install chart-releaser
+        run: |
+          curl -sSLo cr.tar.gz https://github.com/helm/chart-releaser/releases/download/v1.7.0/chart-releaser_1.7.0_linux_amd64.tar.gz
+          tar -xzf cr.tar.gz
+          sudo mv cr /usr/local/bin/cr
+
+      - name: Package charts
+        run: |
+          mkdir -p .cr-release-packages
+          shopt -s nullglob
+          for chart in charts/*/; do
+            if [[ -f "${chart}Chart.yaml" ]]; then
+              helm package "$chart" --destination .cr-release-packages
+            fi
+          done
+
       - name: Publish charts
-        uses: helm/chart-releaser-action@v1.7.0
         env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          owner="${{ github.repository_owner }}"
+          repo="${GITHUB_REPOSITORY#*/}"
+          cr upload --owner "$owner" --repo "$repo" --commit "${{ github.sha }}" --skip-existing
+          cr index --owner "$owner" --repo "$repo" --push
