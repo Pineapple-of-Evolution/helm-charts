@@ -1,0 +1,43 @@
+annotations:
+  artifacthub.io/category: database
+  artifacthub.io/changes: |
+    - kind: changed
+      description: "Rotate cosign signing key: update artifacthub.io/signKey fingerprint"
+  artifacthub.io/license: Apache License 2.0
+  artifacthub.io/links: |
+    - name: Home
+      url: https://nixys.io
+    - name: Source
+      url: https://git.nixys.ru/apps/nuc-subcharts/nuc-mysql-percona-operator
+    - name: Upstream Percona Operator
+      url: https://github.com/nixys/nuc-mysql-percona-operator
+  artifacthub.io/prerelease: "false"
+  artifacthub.io/recommendations: |
+    - url: https://nixys.io
+    - url: https://github.com/nixys/nuc-mysql-percona-operator
+    - url: https://github.com/percona/percona-xtradb-cluster-operator
+  artifacthub.io/signKey: |
+    fingerprint: 6DC59A12500AE4BA79BE0CE5552634D6847EB0CF3C05D3751183F57D27A1E7AC
+    url: https://registry.nixys.io/signkey/cosign.pub
+apiVersion: v2
+appVersion: v1.20.0
+description: Helm chart for Percona XtraDB Cluster Operator custom resources
+home: https://git.nixys.ru/apps/nuc-subcharts/nuc-mysql-percona-operator
+icon: https://registry.nixys.ru/logo.png
+keywords:
+- mysql
+- database
+- percona
+- operator
+- helm
+- universal-chart
+maintainers:
+- email: hello@nixys.io
+  name: Nixys Team
+- email: p.rukin@nixys.ru
+  name: Peter Rukin
+- email: v.vorobyov@nixys.ru
+  name: Vyacheslav Vorobev
+name: nuc-mysql-percona-operator
+type: application
+version: 1.0.1

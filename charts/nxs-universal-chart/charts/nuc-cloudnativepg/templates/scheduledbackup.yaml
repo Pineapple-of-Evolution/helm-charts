@@ -1,0 +1,7 @@
+{{ include "nuc-cloudnativepg.renderResources" (dict
+  "root" $
+  "collection" ($.Values.scheduledBackups | default dict)
+  "kind" "ScheduledBackup"
+  "defaultApiVersion" $.Values.apiVersions.scheduledBackup
+  "namespaced" true
+) }}

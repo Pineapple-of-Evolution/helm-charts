@@ -1,0 +1,8 @@
+{{ include "nuc-strimzi-kafka-operator.renderResources" (dict
+  "root" $
+  "collection" ($.Values.kafkas | default dict)
+  "resourceKey" "kafkas"
+  "kind" "Kafka"
+  "defaultApiVersion" (include "nuc-strimzi-kafka-operator.resolveApiVersion" (dict "root" $ "key" "kafka" "legacyKey" "strimziKafka" "default" "kafka.strimzi.io/v1"))
+  "namespaced" true
+) }}

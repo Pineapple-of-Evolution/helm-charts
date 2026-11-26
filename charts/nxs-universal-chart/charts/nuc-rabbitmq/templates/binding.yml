@@ -1,0 +1,8 @@
+{{ include "nuc-rabbitmq.renderResources" (dict
+  "root" $
+  "collection" ($.Values.bindings | default dict)
+  "resourceKey" "bindings"
+  "kind" "Binding"
+  "defaultApiVersion" (include "nuc-rabbitmq.resolveApiVersion" (dict "root" $ "key" "binding" "legacyKey" "binding" "default" "rabbitmq.com/v1beta1"))
+  "namespaced" true
+) }}

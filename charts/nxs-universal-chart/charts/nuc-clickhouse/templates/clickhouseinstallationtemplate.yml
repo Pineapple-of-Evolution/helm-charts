@@ -1,0 +1,8 @@
+{{ include "nuc-clickhouse.renderResources" (dict
+  "root" $
+  "collection" ($.Values.clickhouseinstallationtemplates | default dict)
+  "resourceKey" "clickhouseinstallationtemplates"
+  "kind" "ClickHouseInstallationTemplate"
+  "defaultApiVersion" (include "nuc-clickhouse.resolveApiVersion" (dict "root" $ "key" "clickhouseInstallationTemplate" "default" "clickhouse.altinity.com/v1"))
+  "namespaced" true
+) }}

@@ -1,0 +1,39 @@
+annotations:
+  artifacthub.io/category: integration-delivery
+  artifacthub.io/changes: |
+    - kind: changed
+      description: "Rotate cosign signing key: update artifacthub.io/signKey fingerprint"
+  artifacthub.io/license: Apache License 2.0
+  artifacthub.io/links: |
+    - name: Home
+      url: https://nixys.io
+    - name: Source
+      url: https://github.com/nixys/nuc-certificates
+    - name: Core Helm Chart
+      url: https://github.com/nixys/nxs-universal-chart
+  artifacthub.io/prerelease: "false"
+  artifacthub.io/recommendations: |
+    - url: https://nixys.io
+    - url: https://github.com/nixys/nuc-certificates
+    - url: https://github.com/nixys/nxs-universal-chart
+  artifacthub.io/signKey: |
+    fingerprint: 6DC59A12500AE4BA79BE0CE5552634D6847EB0CF3C05D3751183F57D27A1E7AC
+    url: https://registry.nixys.io/signkey/cosign.pub
+apiVersion: v2
+appVersion: v1
+description: Helm chart for rendering cert-manager custom resources
+home: https://github.com/nixys/nuc-certificates
+icon: https://registry.nixys.ru/logo.png
+keywords:
+- helm
+- universal-chart
+maintainers:
+- email: hello@nixys.io
+  name: Nixys Team
+- email: p.rukin@nixys.ru
+  name: Peter Rukin
+- email: v.vorobyov@nixys.ru
+  name: Vyacheslav Vorobev
+name: nuc-certificates
+type: application
+version: 1.0.5

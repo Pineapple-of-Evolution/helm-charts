@@ -1,0 +1,7 @@
+{{ include "nuc-cloudnativepg.renderResources" (dict
+  "root" $
+  "collection" ($.Values.poolers | default dict)
+  "kind" "Pooler"
+  "defaultApiVersion" $.Values.apiVersions.pooler
+  "namespaced" true
+) }}

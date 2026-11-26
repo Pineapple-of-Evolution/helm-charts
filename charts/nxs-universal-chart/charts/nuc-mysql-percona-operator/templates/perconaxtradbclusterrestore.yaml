@@ -1,0 +1,6 @@
+{{ include "nuc-mysql-percona-operator.renderResources" (dict
+  "root" $
+  "collection" ($.Values.perconaXtraDBClusterRestores | default dict)
+  "kind" "PerconaXtraDBClusterRestore"
+  "defaultApiVersion" $.Values.apiVersions.perconaXtraDBClusterRestore
+) }}

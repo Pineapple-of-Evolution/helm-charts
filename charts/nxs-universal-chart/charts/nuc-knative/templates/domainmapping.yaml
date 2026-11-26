@@ -1,0 +1,1 @@
+{{ include "nuc-knative.renderResourceCollection" (dict "root" $ "items" .Values.domainMappings "resourceKey" "domainMappings" "defaultApiVersion" $.Values.apiVersions.domainMapping "kind" "DomainMapping" "namespaced" true) }}

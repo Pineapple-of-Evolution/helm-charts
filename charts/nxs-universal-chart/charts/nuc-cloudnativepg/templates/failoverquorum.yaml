@@ -1,0 +1,7 @@
+{{ include "nuc-cloudnativepg.renderResources" (dict
+  "root" $
+  "collection" ($.Values.failoverQuorums | default dict)
+  "kind" "FailoverQuorum"
+  "defaultApiVersion" $.Values.apiVersions.failoverQuorum
+  "namespaced" true
+) }}

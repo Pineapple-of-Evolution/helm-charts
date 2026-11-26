@@ -1,0 +1,33 @@
+{{- range $name := keys (.Values.pdbs | default dict) | sortAlpha }}
+{{- $pdb := get $.Values.pdbs $name -}}
+{{- if eq "true" (include "helpers.resources.isEnabled" (dict "value" $pdb)) }}
+{{- $apiVersion := include "helpers.capabilities.pdb.apiVersion" $ -}}
+{{- if and (not (empty $pdb.unhealthyPodEvictionPolicy)) (ne $apiVersion "policy/v1") -}}
+{{- fail (printf "PDB %q sets unhealthyPodEvictionPolicy, which requires apiVersion policy/v1 (got %q)" $name $apiVersion) -}}
+{{- end }}
+---
+apiVersion: {{ $apiVersion }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "helpers.app.fullname" (dict "name" $name "context" $) }}
+  namespace: {{ $.Release.Namespace | quote }}
+  labels:
+    {{- include "helpers.app.labels" $ | nindent 4 }}
+    {{- include "helpers.app.gitopsLabels" (dict "context" $ "value" $pdb) | nindent 4 }}
+    {{- with $pdb.labels }}{{- include "helpers.tplvalues.render" (dict "value" . "context" $) | nindent 4 }}{{- end }}
+  annotations:
+    {{- include "helpers.app.annotations" (dict "context" $ "value" $pdb) | nindent 4 }}
+spec:
+  {{- if not (empty $pdb.minAvailable) }}
+  minAvailable: {{ $pdb.minAvailable }}
+  {{- else if not (empty $pdb.maxUnavailable) }}
+  maxUnavailable: {{ $pdb.maxUnavailable }}
+  {{- end }}
+  {{- with $pdb.unhealthyPodEvictionPolicy }}
+  unhealthyPodEvictionPolicy: {{ . }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "helpers.app.matchLabels" (dict "value" $pdb.extraSelectorLabels "resource" (printf "pdbs.%s" $name) "context" $) | nindent 6 }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,6 @@
+{{ include "nuc-vault-secret-operator.renderGenericResources" (dict
+  "root" $
+  "collection" ($.Values.vaultConnections | default dict)
+  "kind" "VaultConnection"
+  "defaultApiVersion" $.Values.apiVersions.vaultConnection
+) }}

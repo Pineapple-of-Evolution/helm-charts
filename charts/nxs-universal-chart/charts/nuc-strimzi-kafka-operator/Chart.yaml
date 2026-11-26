@@ -1,0 +1,51 @@
+annotations:
+  artifacthub.io/category: integration-delivery
+  artifacthub.io/changes: |
+    - kind: changed
+      description: "Rotate cosign signing key: update artifacthub.io/signKey fingerprint"
+  artifacthub.io/license: Apache License 2.0
+  artifacthub.io/links: |
+    - name: Home
+      url: https://nixys.io
+    - name: Source
+      url: https://github.com/nixys/nuc-strimzi-kafka-operator
+    - name: Core Helm Chart
+      url: https://github.com/nixys/nxs-universal-chart
+    - name: strimzi-kafka-operator
+      url: https://github.com/strimzi/strimzi-kafka-operator
+  artifacthub.io/prerelease: "false"
+  artifacthub.io/recommendations: |
+    - url: https://nixys.io
+    - url: https://github.com/nixys/nuc-strimzi-kafka-operator
+    - url: https://github.com/nixys/nxs-universal-chart
+    - url: https://github.com/strimzi/strimzi-kafka-operator
+  artifacthub.io/signKey: |
+    fingerprint: 6DC59A12500AE4BA79BE0CE5552634D6847EB0CF3C05D3751183F57D27A1E7AC
+    url: https://registry.nixys.io/signkey/cosign.pub
+apiVersion: v2
+appVersion: 1.0.0
+description: Helm chart for rendering Strimzi Kafka Operator custom resources
+home: https://github.com/nixys/nuc-strimzi-kafka-operator
+icon: https://registry.nixys.ru/logo.png
+keywords:
+- strimzi
+- kafka
+- kafka-operator
+- kafka-connect
+- kafka-topic
+- kafka-user
+- kafka-node-pool
+- kafka-bridge
+- kafka-rebalance
+- helm
+- universal-chart
+maintainers:
+- email: hello@nixys.io
+  name: Nixys Team
+- email: p.rukin@nixys.ru
+  name: Peter Rukin
+- email: v.vorobyov@nixys.ru
+  name: Vyacheslav Vorobev
+name: nuc-strimzi-kafka-operator
+type: application
+version: 1.0.1

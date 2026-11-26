@@ -1,0 +1,209 @@
+
+---
+# Source: nuc-keycloak-operator/templates/keycloak.yaml
+apiVersion: k8s.keycloak.org/v2beta1
+kind: Keycloak
+metadata:
+  name: primary
+  namespace: identity
+  labels:
+
+    app.kubernetes.io/instance: smoke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak-platform
+    app.kubernetes.io/version: 26.6.1
+    component: keycloak
+    helm.sh/chart: nuc-keycloak-operator-1.0.0
+    platform: iam
+  annotations:
+
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "1"
+    note: primary
+    team: platform
+spec:
+
+  bootstrapAdmin:
+    service:
+      secret: keycloak-bootstrap-service
+    user:
+      secret: keycloak-bootstrap-admin
+  db:
+    database: keycloak
+    host: postgres-rw.identity.svc
+    passwordSecret:
+      key: password
+      name: keycloak-db
+    port: 5432
+    usernameSecret:
+      key: username
+      name: keycloak-db
+    vendor: postgres
+  http:
+    httpEnabled: true
+    httpPort: 8080
+  image: quay.io/keycloak/keycloak:26.6.1
+  ingress:
+    className: nginx
+    enabled: true
+  instances: 1
+---
+# Source: nuc-keycloak-operator/templates/keycloak.yaml
+apiVersion: k8s.keycloak.org/v2beta1
+kind: Keycloak
+metadata:
+  name: secondary
+  namespace: identity
+  labels:
+
+    app.kubernetes.io/instance: smoke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak-platform
+    app.kubernetes.io/version: 26.6.1
+    component: keycloak
+    helm.sh/chart: nuc-keycloak-operator-1.0.0
+    platform: iam
+  annotations:
+
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "1"
+    note: secondary
+    team: platform
+spec:
+
+  db:
+    passwordSecret:
+      key: password
+      name: keycloak-db
+    url: jdbc:postgresql://postgres-rw.identity.svc:5432/keycloak
+    usernameSecret:
+      key: username
+      name: keycloak-db
+    vendor: postgres
+  hostname:
+    hostname: sso.example.com
+    strict: true
+  http:
+    httpsPort: 8443
+    serviceHttpsPort: 443
+    tlsSecret: keycloak-tls
+  image: quay.io/keycloak/keycloak:26.6.1
+  instances: 2
+  resources:
+    limits:
+      cpu: "2"
+      memory: 2Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  startOptimized: true
+---
+# Source: nuc-keycloak-operator/templates/keycloakrealmimport.yaml
+apiVersion: k8s.keycloak.org/v2beta1
+kind: KeycloakRealmImport
+metadata:
+  name: demo-realm
+  namespace: identity
+  labels:
+
+    app.kubernetes.io/instance: smoke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak-platform
+    app.kubernetes.io/version: 26.6.1
+    component: realm-import
+    helm.sh/chart: nuc-keycloak-operator-1.0.0
+    platform: iam
+  annotations:
+
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "1"
+    note: demo
+    team: platform
+spec:
+
+  keycloakCRName: primary
+  placeholders:
+    APP_BASE_URL:
+      secret:
+        key: APP_BASE_URL
+        name: demo-realm-placeholders
+  realm:
+    clients:
+    - clientId: demo-web
+      enabled: true
+      name: demo-web
+      publicClient: true
+      redirectUris:
+      - https://app.example.com/*
+      webOrigins:
+      - https://app.example.com
+    displayName: Demo Realm
+    enabled: true
+    id: demo
+    loginTheme: keycloak
+    realm: demo
+    roles:
+      realm:
+      - description: Demo administrator
+        name: admin
+      - description: Demo user
+        name: user
+    sslRequired: external
+    users:
+    - credentials:
+      - type: password
+        value: change-me
+      emailVerified: true
+      enabled: true
+      username: demo-admin
+---
+# Source: nuc-keycloak-operator/templates/keycloakrealmimport.yaml
+apiVersion: k8s.keycloak.org/v2beta1
+kind: KeycloakRealmImport
+metadata:
+  name: ops-realm
+  namespace: identity
+  labels:
+
+    app.kubernetes.io/instance: smoke
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak-platform
+    app.kubernetes.io/version: 26.6.1
+    component: realm-import
+    helm.sh/chart: nuc-keycloak-operator-1.0.0
+    platform: iam
+  annotations:
+
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "1"
+    note: ops
+    team: platform
+spec:
+
+  keycloakCRName: secondary
+  placeholders:
+    OPS_CONSOLE_URL:
+      secret:
+        key: OPS_CONSOLE_URL
+        name: ops-realm-placeholders
+  realm:
+    clients:
+    - bearerOnly: true
+      clientId: ops-api
+      enabled: true
+      name: ops-api
+    displayName: Operations Realm
+    enabled: true
+    groups:
+    - name: ops
+    id: ops
+    realm: ops
+    sslRequired: external
+    users:
+    - email: ops-admin@example.com
+      enabled: true
+      username: ops-admin

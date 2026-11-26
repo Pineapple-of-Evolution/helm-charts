@@ -1,0 +1,8 @@
+{{ include "nuc-valkey.renderResources" (dict
+  "root" $
+  "collection" ($.Values.valkeynodes | default dict)
+  "resourceKey" "valkeynodes"
+  "kind" "ValkeyNode"
+  "defaultApiVersion" (include "nuc-valkey.resolveApiVersion" (dict "root" $ "key" "valkeyNode" "legacyKey" "valkeyNode" "default" "valkey.io/v1alpha1"))
+  "namespaced" true
+) }}
