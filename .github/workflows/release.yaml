@@ -61,4 +61,5 @@ jobs:
           owner="${{ github.repository_owner }}"
           repo="${GITHUB_REPOSITORY#*/}"
           cr upload --owner "$owner" --git-repo "$repo" --commit "${{ github.sha }}" --skip-existing
+          mkdir -p .cr-index
           cr index --owner "$owner" --git-repo "$repo" --push
